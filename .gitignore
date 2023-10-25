@@ -2,7 +2,7 @@
 *
 
 # Only include user defined configs
-# !lua/
+!lua/
 !init.lua
 
 
