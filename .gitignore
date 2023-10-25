@@ -1,9 +1,9 @@
-# # Ignore all files and directories by default
-# *
-#
-# # Only include user defined configs
-# !lua/
-# !init.lua
+# Ignore all files and directories by default
+*
+
+# Only include user defined configs
+!lua/
+!init.lua
 
 
 # Compiled Lua sources
