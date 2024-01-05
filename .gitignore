@@ -2,9 +2,9 @@
 *
 
 # Only include user defined configs
-!lua/
-!init.lua
-!.init.vim
+# !lua/
+# !init.lua
+# !.init.vim
 
 
 # Compiled Lua sources

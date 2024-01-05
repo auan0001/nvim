@@ -14,6 +14,7 @@ require('configs.null-ls')
 require('configs.prettier-lsp')
 
 -- basics
+vim.o.termguicolors = true
 -- Set the tab width (indent size) to 4 spaces
 vim.api.nvim_set_option('tabstop', 2)
 
@@ -58,5 +59,11 @@ if vim.fn.argc() < 1 then
     require('orgmode').action('agenda.agenda')
   end)
 end
+
+-- Disable ligatures in Neovim
+vim.cmd[[set guifont=your-font:h10]]  -- Set the desired font and size
+
+-- Or, if you are using a terminal-based Neovim, set the font with the appropriate escape codes
+-- vim.cmd[[set termguifont=your-font:h10]]
 
 require('keybindings')

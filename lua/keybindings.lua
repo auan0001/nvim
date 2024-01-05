@@ -79,9 +79,14 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 
 
--- Edit dotfiles
+-- Edit dotfiles with Telescope
 vim.keymap.set('n', '<leader>df',
 function()
-  builtin.find_files({ cwd = "~/.config/nvim" })
+  require('telescope.builtin').find_files({
+    prompt_title = "Dotfiles",
+    cwd = "~/.config/nvim/",
+    find_command = {'find', '.', '-type', 'f', '-not', '-path', '*/\\.*'},
+    -- find_command = {'rg', '--files', '--hidden', '--ignore-file', '~/.gitignore'},
+  })
 end, opts)
 
