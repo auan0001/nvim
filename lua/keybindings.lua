@@ -85,7 +85,7 @@ function()
   require('telescope.builtin').find_files({
     prompt_title = "Dotfiles",
     cwd = "~/.config/nvim/",
-    find_command = {'find', '.', '-type', 'f', '-not', '-path', '*/\\.*'},
+    -- find_command = {'find', '.', '-type', 'f', '-not', '-path', '*/\\.*'},
     -- find_command = {'rg', '--files', '--hidden', '--ignore-file', '~/.gitignore'},
   })
 end, opts)
