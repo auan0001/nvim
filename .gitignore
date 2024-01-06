@@ -3,6 +3,9 @@
 # !init.lua
 # !.init.vim
 
+/spell
+/plugin
+/snippets
 
 # Compiled Lua sources
 luac.out
