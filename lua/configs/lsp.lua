@@ -57,7 +57,7 @@ require'lspconfig'.lua_ls.setup {
 require'lspconfig'.tsserver.setup{}
 
 -- Python
-require'lspconfig'.pyright.setup{}
+require'lspconfig'.pylsp.setup{}
 
 require'lspconfig'.rust_analyzer.setup {
   -- Server-specific settings. See `:help lspconfig-setup`

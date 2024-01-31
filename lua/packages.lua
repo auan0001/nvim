@@ -1,4 +1,21 @@
-require('packer').startup({function(use)
+-- Packer bootstrapping
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
+return require('packer').startup({function(use)
+  -- Packer
+  use 'wbthomason/packer.nvim'
+  -- Rest of plugins
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-cmdline'
@@ -27,10 +44,12 @@ require('packer').startup({function(use)
   use 'folke/trouble.nvim'
   use 'jose-elias-alvarez/null-ls.nvim'
   use 'MunifTanjim/prettier.nvim'
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig'
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
   end}
--- Lua
+
   use ("ahmedkhalf/project.nvim")
   use {
     'numToStr/Navigator.nvim',
@@ -38,26 +57,29 @@ require('packer').startup({function(use)
       require('Navigator').setup()
     end
   }
-  -- use {
-  --   "auan0001/luasnip-latex-snippets.nvim",
-  --   -- replace "lervag/vimtex" with "nvim-treesitter/nvim-treesitter" if you're
-  --   -- using treesitter.
-  --   requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
-  --   config = function()
-  --     require('luasnip-latex-snippets').setup({use_treesitter = true})
-  --     -- or setup({ use_treesitter = true })
-  --   end,
-  --   ft = "tex",
-  -- }
+use {
+  -- "iurimateus/luasnip-latex-snippets.nvim",
+  "auan0001/luasnip-latex-snippets.nvim",
+  -- vimtex isn't required if using treesitter
+  requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
+  config = function()
+    require'luasnip-latex-snippets'.setup({ use_treesitter = true })
+    require("luasnip").config.setup { enable_autosnippets = true }
+  end,
+}
   use "rafamadriz/friendly-snippets"
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end,
 
-
--- floating Packer
-config = {
+  -- Floating Packer
+  config = {
   display = {
     open_fn = function()
       return require('packer.util').float({ border = 'single' })
     end
-  }
-}})
+  }}
+})

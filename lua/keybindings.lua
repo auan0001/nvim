@@ -68,6 +68,7 @@ vim.keymap.set('n', '<leader>mm', function () vim.cmd('vertical terminal matlab 
 
 -- Map <leader>r to run Python script in terminal
 vim.api.nvim_set_keymap('n', '<leader>r', [[:term python3 %<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>n', [[:!python ~/Scripts/Namn/namn <CR>]], { noremap = true, silent = true })
 
 -- Telescope
 local builtin = require('telescope.builtin')

@@ -32,10 +32,15 @@ require('orgmode').setup({
       template = "* TODO %^{Task}\nDEADLINE: %T\n:PROPERTIES:\n:DESCRIPTION: %^{Desc}\n:END:\n",
       target = '~/Dropbox/OrgFiles/Tasks.org',
     },
-       j = {
+    j = {
       description = 'Journal',
       template = '\n** %<%Y-%m-%d> %<%A>\n*** %U\n\n%?',
       target = '~/Dropbox/OrgFiles/Journal.org',
+    },
+    p = {
+      description = 'Project Journal',
+      template = '\n** %<%Y-%m-%d> %<%A>\n*** %U\n\n%?',
+      target = '~/Dropbox/OrgFiles/Project.org',
     },
   },
 
