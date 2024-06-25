@@ -57,7 +57,18 @@ require'lspconfig'.lua_ls.setup {
 require'lspconfig'.tsserver.setup{}
 
 -- Python
-require'lspconfig'.pylsp.setup{}
+require'lspconfig'.pylsp.setup{
+   settings = {
+     pylsp = {
+       plugins = {
+         pycodestyle = {
+           ignore = {'W391'},
+           maxLineLength = 100
+         }
+       }
+     }
+   }
+ }
 
 require'lspconfig'.rust_analyzer.setup {
   -- Server-specific settings. See `:help lspconfig-setup`

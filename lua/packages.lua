@@ -22,6 +22,8 @@ return require('packer').startup({function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-path'
   use 'saadparwaiz1/cmp_luasnip'
+  use "L3MON4D3/LuaSnip"
+  use "lervag/vimtex"
   use 'windwp/nvim-autopairs'
   use 'windwp/nvim-ts-autotag'
   use 'kyazdani42/nvim-tree.lua'
@@ -57,16 +59,15 @@ return require('packer').startup({function(use)
       require('Navigator').setup()
     end
   }
-use {
-  -- "iurimateus/luasnip-latex-snippets.nvim",
-  "auan0001/luasnip-latex-snippets.nvim",
-  -- vimtex isn't required if using treesitter
-  requires = { "L3MON4D3/LuaSnip", "lervag/vimtex" },
-  config = function()
-    require'luasnip-latex-snippets'.setup({ use_treesitter = true })
-    require("luasnip").config.setup { enable_autosnippets = true }
-  end,
-}
+  use {
+    "iurimateus/luasnip-latex-snippets.nvim",
+    -- "auan0001/luasnip-latex-snippets.nvim",
+    -- vimtex isn't required if using treesitter
+    config = function()
+      require'luasnip-latex-snippets'.setup({ use_treesitter = true })
+      require("luasnip").config.setup { enable_autosnippets = true }
+    end,
+  }
   use "rafamadriz/friendly-snippets"
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
@@ -77,9 +78,9 @@ end,
 
   -- Floating Packer
   config = {
-  display = {
-    open_fn = function()
-      return require('packer.util').float({ border = 'single' })
-    end
-  }}
+    display = {
+      open_fn = function()
+        return require('packer.util').float({ border = 'single' })
+      end
+    }}
 })

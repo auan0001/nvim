@@ -127,7 +127,7 @@ require('lspconfig')['clangd'].setup {
   capabilities = capabilities
 }
 
-require('lspconfig')['pyright'].setup {
+require('lspconfig')['pylsp'].setup {
   capabilities = capabilities
 }
 
