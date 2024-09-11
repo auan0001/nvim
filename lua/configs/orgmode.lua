@@ -1,5 +1,5 @@
 -- Load custom tree-sitter grammar for org filetype
-require('orgmode').setup_ts_grammar()
+-- require('orgmode').setup_ts_grammar()
 local theme = require('onenord.colors.onenord')
 
 -- Treesitter configuration
@@ -12,36 +12,36 @@ require('nvim-treesitter.configs').setup {
     -- code block highlights that do not have ts grammar
     additional_vim_regex_highlighting = {'org'},
   },
-  ensure_installed = {'org'}, -- Or run :TSUpdate org
+  -- ensure_installed = {'org'}, -- Or run :TSUpdate org
 }
 
 require('orgmode').setup({
 
+  -- Work org-stuff
   org_agenda_files = {
-    '~/Dropbox/OrgFiles/Home.org',
-    '~/Dropbox/OrgFiles/Journal.org',
-    '~/Dropbox/OrgFiles/Tasks.org',
+    '~/Org/tasks.org',
+    '~/Org/journal.org',
   },
 
-  org_default_notes_file = '~/Dropbox/OrgFiles/Tasks.org',
+  org_default_notes_file = '~/Org/tasks.org',
 
   -- Capture templates
   org_capture_templates = {
     t = {
       description = "Todo",
       template = "* TODO %^{Task}\nDEADLINE: %T\n:PROPERTIES:\n:DESCRIPTION: %^{Desc}\n:END:\n",
-      target = '~/Dropbox/OrgFiles/Tasks.org',
+      target = '~/Org/tasks.org',
     },
     j = {
       description = 'Journal',
       template = '\n** %<%Y-%m-%d> %<%A>\n*** %U\n\n%?',
-      target = '~/Dropbox/OrgFiles/Journal.org',
+      target = '~/Org/journal.org',
     },
-    p = {
-      description = 'Project Journal',
-      template = '\n** %<%Y-%m-%d> %<%A>\n*** %U\n\n%?',
-      target = '~/Dropbox/OrgFiles/Project.org',
-    },
+    -- p = {
+    --   description = 'Project Journal',
+    --   template = '\n** %<%Y-%m-%d> %<%A>\n*** %U\n\n%?',
+    --   target = '~/Dropbox/OrgFiles/Project.org',
+    -- },
   },
 
   -- Custom keywords

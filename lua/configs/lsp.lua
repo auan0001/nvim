@@ -54,25 +54,40 @@ require'lspconfig'.lua_ls.setup {
 }
 
 -- TS
-require'lspconfig'.tsserver.setup{}
+require'lspconfig'.ts_ls.setup{}
 
 -- Python
 require'lspconfig'.pylsp.setup{
-   settings = {
-     pylsp = {
-       plugins = {
-         pycodestyle = {
-           ignore = {'W391'},
-           maxLineLength = 100
-         }
-       }
-     }
-   }
- }
-
-require'lspconfig'.rust_analyzer.setup {
-  -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
-    ['rust-analyzer'] = {},
-  },
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          ignore = {'W391'},
+          maxLineLength = 100
+        },
+        pylint = {
+          enabled = true,
+          args = {"--max-line-length=100"}
+        }
+      }
+    }
+  }
+}
+
+require('lspconfig').rust_analyzer.setup {
+  -- Other Configs ...
+  settings = {
+    ["rust-analyzer"] = {
+      -- Other Settings ...
+      procMacro = {
+        ignored = {
+            leptos_macro = {
+                -- optional: --
+                -- "component",
+                "server",
+            },
+        },
+      },
+    },
+  }
 }

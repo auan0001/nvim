@@ -3,12 +3,16 @@
 
 -- Set up the compiler
 vim.g.vimtex_compiler_latexmk = {
-  executable = 'latexmk',
-  options = {
-    '-pdf',
-    '-interaction=nonstopmode',
-    '-synctex=1',
-  },
+    build_dir = '',
+    callback = 1,
+    continuous = 1,
+    executable = 'latexmk',
+    hooks = {},
+    options = {
+        '-pdf',
+        '-lualatex',
+        '-shell-escape',
+    },
 }
 
 -- Enable automatic compilation on save

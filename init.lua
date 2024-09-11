@@ -14,6 +14,7 @@ require('configs.null-ls')
 require('configs.prettier-lsp')
 require('configs.mason')
 require('configs.mason-lspconfig')
+require('configs.colorizer')
 
 -- basics
 vim.o.termguicolors = true

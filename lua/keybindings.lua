@@ -52,9 +52,6 @@ vim.keymap.set("i", "<c-h>", function () vim.lsp.buf.signature_help() end, opts)
 -- Tree
 vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
 
--- Trouble
-vim.keymap.set("n", "<leader>xx", function () vim.cmd.Trouble('document_diagnostics') end)
-
 -- Spelling, using toggler
 vim.keymap.set("n", "<leader>s", function () vim_opt_toggle("spell", true, false, "Spelling") end)
 
@@ -76,6 +73,8 @@ vim.keymap.set('n', '<leader>fl', builtin.live_grep, opts)
 vim.keymap.set('n', '<leader>fg', builtin.git_files, opts)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, opts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
+vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
+vim.keymap.set('n', '<leader>xx', builtin.diagnostics, opts)
 
 local function append_newline_wrap_quotes()
   -- Save the current buffer number
@@ -123,6 +122,8 @@ end
 
 -- Create a keybinding for the function
 vim.api.nvim_set_keymap('v', '<leader>/', '<cmd>lua search_visual_selection()<CR>', opts)
+
+
 
 -- Edit dotfiles with Telescope
 vim.keymap.set('n', '<leader>df',
