@@ -17,6 +17,9 @@ return require('packer').startup({function(use)
   use 'wbthomason/packer.nvim'
   -- Rest of plugins
   use 'hrsh7th/nvim-cmp'
+  use 'tpope/vim-dadbod'
+  use 'lepture/vim-jinja'
+  use 'kristijanhusak/vim-dadbod-ui'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/cmp-nvim-lsp'
