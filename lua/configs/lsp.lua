@@ -54,7 +54,7 @@ require'lspconfig'.lua_ls.setup {
 }
 
 -- TS
-require'lspconfig'.tsserver.setup{}
+require'lspconfig'.ts_ls.setup{}
 
 -- Python
 require'lspconfig'.pylsp.setup{
