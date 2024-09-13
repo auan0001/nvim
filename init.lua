@@ -1,21 +1,4 @@
-require('packages')
-require('configs.theme')
-require('configs.lsp')
-require('configs.treesitter')
-require('configs.tree')
-require('configs.lualine')
-require('configs.comment')
-require('configs.orgmode')
-require('configs.clangd')
-require('configs.cmp')
-require('configs.luasnip')
-require('configs.autopairs')
-require('configs.null-ls')
-require('configs.prettier-lsp')
-require('configs.mason')
-require('configs.mason-lspconfig')
-require('configs.colorizer')
-
+require("config.lazy")
 -- basics
 vim.o.termguicolors = true
 -- Set the tab width (indent size) to 4 spaces
