@@ -2,20 +2,6 @@
 -- require('orgmode').setup_ts_grammar()
 local theme = require('onenord.colors.onenord')
 
-<<<<<<< HEAD
--- -- Treesitter configuration
--- require('nvim-treesitter.configs').setup {
---   -- If TS highlights are not enabled at all, or disabled via `disable` prop,
---   -- highlighting will fallback to default Vim syntax highlighting
---   highlight = {
---     enable = true,
---     -- Required for spellcheck, some LaTex highlights and
---     -- code block highlights that do not have ts grammar
---     additional_vim_regex_highlighting = {'org'},
---   },
---   ensure_installed = {'org'}, -- Or run :TSUpdate org
--- }
-=======
 -- Treesitter configuration
 require('nvim-treesitter.configs').setup {
   -- If TS highlights are not enabled at all, or disabled via `disable` prop,
@@ -26,9 +12,8 @@ require('nvim-treesitter.configs').setup {
     -- code block highlights that do not have ts grammar
     additional_vim_regex_highlighting = {'org'},
   },
-  -- ensure_installed = {'org'}, -- Or run :TSUpdate org
+  ensure_installed = {'org'}, -- Or run :TSUpdate org
 }
->>>>>>> lazy
 
 require('orgmode').setup({
 

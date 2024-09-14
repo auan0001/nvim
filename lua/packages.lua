@@ -1,17 +1,22 @@
--- Packer bootstrapping
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+-- Bootstrapping Lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
+-- Setting up Lazy.nvim
+require("lazy").setup({
+  -- Plugins list
 
+<<<<<<< HEAD
 return require('packer').startup({function(use)
   -- Packer
   use 'wbthomason/packer.nvim'
@@ -54,36 +59,94 @@ return require('packer').startup({function(use)
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
   end}
+=======
+  -- CMP Plugins
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-cmdline" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "hrsh7th/cmp-path" },
+  { "saadparwaiz1/cmp_luasnip" },
+>>>>>>> lazy
 
-  use ("ahmedkhalf/project.nvim")
-  use {
-    'numToStr/Navigator.nvim',
-    config = function()
-      require('Navigator').setup()
-    end
-  }
-  use {
+  -- Snippets
+  { "L3MON4D3/LuaSnip" },
+  { "rafamadriz/friendly-snippets" },
+  {
     "iurimateus/luasnip-latex-snippets.nvim",
-    -- "auan0001/luasnip-latex-snippets.nvim",
-    -- vimtex isn't required if using treesitter
     config = function()
       require'luasnip-latex-snippets'.setup({ use_treesitter = true })
       require("luasnip").config.setup { enable_autosnippets = true }
     end,
-  }
-  use "rafamadriz/friendly-snippets"
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end,
+  },
 
-  -- Floating Packer
-  config = {
-    display = {
-      open_fn = function()
-        return require('packer.util').float({ border = 'single' })
-      end
-    }}
+  -- Tex
+  { "lervag/vimtex" },
+
+  -- Utility Plugins
+  { "windwp/nvim-autopairs" },
+  { "norcalli/nvim-colorizer.lua" },
+  { "windwp/nvim-ts-autotag" },
+
+  -- File Explorer and Icons
+  { "kyazdani42/nvim-tree.lua" },
+  { "kyazdani42/nvim-web-devicons" },
+
+  -- Miscellaneous
+  { "machakann/vim-highlightedyank" },
+  { "machakann/vim-sandwich" },
+  { "neovim/nvim-lspconfig" },
+  { "nvim-lua/plenary.nvim" },
+
+  -- UI Plugins
+  { "nvim-lualine/lualine.nvim" },
+  { "rmehri01/onenord.nvim" }, -- Nord theme
+  { "nvim-orgmode/orgmode" },
+
+  -- Telescope (Lazy-loaded)
+  {
+    "nvim-telescope/telescope.nvim",
+    cmd = "Telescope",
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
+
+  -- Treesitter (For better syntax highlighting and parsing)
+  { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
+
+  -- Commenting Plugin
+  { "numToStr/Comment.nvim" },
+
+  -- Navigation
+  { "tpope/vim-repeat" },
+  { "zhimsel/vim-stay" },
+  { "folke/trouble.nvim" },
+  {
+    "numToStr/Navigator.nvim",
+    config = function() require('Navigator').setup() end
+  },
+
+  -- Debugging and Formatting
+  { "mfussenegger/nvim-dap" },
+  { "jose-elias-alvarez/null-ls.nvim" },
+  { "MunifTanjim/prettier.nvim" },
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig" },
+
+  -- Terminal
+  {
+    "akinsho/toggleterm.nvim",
+    version = '*',
+    config = function() require("toggleterm").setup() end
+  },
+
+  -- Project management
+  { "ahmedkhalf/project.nvim" },
+
+  -- Jinja Syntax Highlighting
+  { "lepture/vim-jinja" },
+}, {
+  -- UI configuration for Lazy.nvim
+  ui = {
+    border = "single",  -- Set the border for floating windows to single
+  }
 })
