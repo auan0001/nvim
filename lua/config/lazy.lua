@@ -21,6 +21,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
+vim.opt.viewoptions = { "cursor", "folds", "slash", "unix" }
+
 vim.o.termguicolors = true
 -- Set the tab width (indent size) to 4 spaces
 vim.api.nvim_set_option('tabstop', 2)
@@ -38,13 +40,31 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 
+-- Set border for LSP floating windows globally
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "single" -- or "double", "rounded", "solid", "shadow"
+})
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "single" -- choose your preferred border style
+})
+
 -- Python host
-vim.g.python3_host_prog = '/bin/python'
+vim.g.python3_host_prog = '/usr/bin/python3'
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
     -- import your plugins
     { import = "plugins" },
+  },
+  -- ui config
+  ui = {
+    border = "single",
+    size = {
+      width = 0.8,
+      height = 0.8,
+    },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.

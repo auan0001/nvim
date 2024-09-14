@@ -76,55 +76,6 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, opts)
 vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
 vim.keymap.set('n', '<leader>xx', builtin.diagnostics, opts)
 
-local function append_newline_wrap_quotes()
-  -- Save the current buffer number
-  local bufnr = vim.api.nvim_get_current_buf()
-
-  -- Get the start and end positions of the visual selection
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
-
-  -- Convert from 1-based to 0-based index
-  local start_line = start_pos[2] - 1
-  local end_line = end_pos[2] - 1
-
-  -- Get lines in the visual selection
-  local lines = vim.api.nvim_buf_get_lines(bufnr, start_line, end_line + 1, false)
-
-  -- Append newline character to each line
-  for i = 1, #lines do
-    lines[i] = lines[i] .. "\\n"
-  end
-
-  -- Concatenate all lines and wrap them with quotes
-  local wrapped_lines = '"' .. table.concat(lines, "") .. '"'
-
-  -- Replace the selected lines with the new wrapped text
-  vim.api.nvim_buf_set_lines(bufnr, start_line, end_line + 1, false, { wrapped_lines })
-end
-
--- Function to be called in visual mode
-local function wrap_append_quote_visual()
-  vim.api.nvim_command("'<,'>lua append_newline_wrap_quotes()")
-end
-
--- Bind the function to a command for easy usage
-vim.api.nvim_create_user_command('WrapAppendQuote', wrap_append_quote_visual, { range = true })
-
--- Define a function to search for the visual selection
-local function search_visual_selection()
-  local selected_text = vim.fn.getreg('"')
-  if selected_text ~= '' then
-    vim.fn.setreg('/', vim.fn.escape(selected_text, '/'))
-  end
-  vim.cmd('normal! n')
-end
-
--- Create a keybinding for the function
-vim.api.nvim_set_keymap('v', '<leader>/', '<cmd>lua search_visual_selection()<CR>', opts)
-
-
-
 -- Edit dotfiles with Telescope
 vim.keymap.set('n', '<leader>df',
   function()

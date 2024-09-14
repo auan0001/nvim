@@ -1,12 +1,19 @@
+local lsp_table = { "lua_ls", "pylsp", "clangd", "rust_analyzer" }
+
 return {
   {"machakann/vim-sandwich"},
-  {"windwp/nvim-autopairs"},
+  {"zhimsel/vim-stay"},
+  {"tpope/vim-repeat"},
+  {
+    "windwp/nvim-autopairs",
+    config = true,
+  },
   -- Mason plugin to install/manage LSP servers
   {
     "williamboman/mason.nvim",
     config = true,
     opts = {
-      ensure_installed = { "lua_ls", "pylsp" },  -- Ensure both lua_ls and pylsp are installed
+      ensure_installed = lsp_table
     },
   },
   -- Mason-LSPconfig integration to easily set up LSP servers
@@ -14,7 +21,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "pylsp" },  -- Ensure both lua_ls and pylsp are configured
+      ensure_installed = lsp_table
       })
     end,
   },
