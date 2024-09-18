@@ -46,10 +46,12 @@ return {
       lspconfig.pylsp.setup({
         settings = {
           pylsp = {
+            configurationSources = { "pycodestyle" },  -- Ensure pycodestyle is used
             plugins = {
               pycodestyle = {
                 enabled = true,
-                ignore = { "E501" },  -- Example: Ignore line-length warnings
+                maxLineLength = 100,
+                -- ignore = { "E501" },
               },
               pylint = {
                 enabled = false,  -- Disable pylint if you prefer pycodestyle or other linters
