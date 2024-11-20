@@ -40,14 +40,34 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 
--- Set border for LSP floating windows globally
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "single" -- or "double", "rounded", "solid", "shadow"
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+  },
 })
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = "single" -- choose your preferred border style
+local lsp_handlers = vim.lsp.handlers
+
+lsp_handlers["textDocument/hover"] = vim.lsp.with(lsp_handlers.hover, {
+  border = "rounded",
 })
+
+lsp_handlers["textDocument/signatureHelp"] = vim.lsp.with(lsp_handlers.signature_help, {
+  border = "rounded",
+})
+
+vim.lsp.util.open_floating_preview = (function(orig)
+  return function(contents, syntax, opts)
+    opts = opts or {}
+    opts.border = "rounded"
+    return orig(contents, syntax, opts)
+  end
+end)(vim.lsp.util.open_floating_preview)
 
 -- Python host
 vim.g.python3_host_prog = '/usr/bin/python3'

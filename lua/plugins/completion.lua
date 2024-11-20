@@ -35,7 +35,7 @@ return {
 
       -- Setup LSP servers.
       require('lspconfig')['clangd'].setup { capabilities = capabilities }
-      require('lspconfig')['pylsp'].setup { capabilities = capabilities }
+      require('lspconfig')['pyright'].setup { capabilities = capabilities }
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -95,7 +95,7 @@ return {
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = 'path' }
+          -- { name = 'path' }
         }, {
           { name = 'cmdline' }
         })

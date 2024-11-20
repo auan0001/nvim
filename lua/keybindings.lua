@@ -43,8 +43,8 @@ vim.keymap.set("n", "<leader>vws", function () vim.lsp.buf.workspace_symbol() en
 vim.keymap.set("n", "<leader>vd", function () vim.diagnostic.open_float() end, opts)
 vim.keymap.set("n", "<leader>vl", function () vim.diagnostic.setloclist() end, opts)
 vim.keymap.set("n", "<leader>vca", function () vim.lsp.buf.code_action() end, opts)
-vim.keymap.set("n", "<leader>vrr", function () vim.lsp.buf.references() end, opts)
-vim.keymap.set("n", "<leader>vrn", function () vim.lsp.buf.rename() end, opts)
+vim.keymap.set("n", "<leader>vsr", function () vim.lsp.buf.references() end, opts)
+vim.keymap.set("n", "<leader>vr", function () vim.lsp.buf.rename() end, opts)
 vim.keymap.set("n", "[d", function () vim.diagnostic.goto_next() end, opts)
 vim.keymap.set("n", "]d", function () vim.diagnostic.goto_prev() end, opts)
 vim.keymap.set("i", "<c-h>", function () vim.lsp.buf.signature_help() end, opts)
@@ -60,10 +60,6 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n><CR>')
 
 -- Matlab
 vim.keymap.set('n', '<leader>mm', function () vim.cmd('vertical terminal matlab -nosplash -nodesktop') end, opts)
-
--- Map <leader>r to run Python script in terminal
-vim.api.nvim_set_keymap('n', '<leader>r', [[:term python3 %<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>n', [[:!python ~/Scripts/Namn/namn <CR>]], { noremap = true, silent = true })
 
 -- Telescope
 local builtin = require('telescope.builtin')

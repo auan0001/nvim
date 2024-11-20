@@ -1,65 +1,100 @@
-local lsp_table = { "lua_ls", "pylsp", "clangd", "rust_analyzer" }
+local lsp_servers = { "lua_ls", "pyright", "ruff", "clangd", "rust_analyzer" }
 
 return {
-  {"machakann/vim-sandwich"},
-  {"zhimsel/vim-stay"},
-  {"tpope/vim-repeat"},
+  -- Utility plugins
+  { "machakann/vim-sandwich" },
+  { "zhimsel/vim-stay" },
+  { "tpope/vim-repeat" },
   {
     "windwp/nvim-autopairs",
-    config = true,
+    opts = {},
   },
-  -- Mason plugin to install/manage LSP servers
+  -- Mason plugin to install/manage LSP servers and tools
   {
     "williamboman/mason.nvim",
-    config = true,
-    opts = {
-      ensure_installed = lsp_table
-    },
+    build = ":MasonUpdate",
+    opts = {},
   },
   -- Mason-LSPconfig integration to easily set up LSP servers
   {
     "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup({
-      ensure_installed = lsp_table
-      })
-    end,
+    opts = {
+      ensure_installed = lsp_servers,
+    },
   },
   -- Neovim LSPconfig for configuring language servers
   {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
+      local mason_lspconfig = require("mason-lspconfig")
 
-      -- Lua language server setup
-      lspconfig.lua_ls.setup({
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },  -- Recognize 'vim' as a global variable
-            },
-          },
-        },
-      })
+      -- Default capabilities and on_attach function (optional)
+      local capabilities = require("cmp_nvim_lsp").default_capabilities() -- If using `nvim-cmp`
+      local on_attach = function(client, bufnr)
+        -- Define common keymaps or commands if needed
+      end
 
-      -- Python language server setup
-      lspconfig.pylsp.setup({
-        settings = {
-          pylsp = {
-            configurationSources = { "pycodestyle" },  -- Ensure pycodestyle is used
-            plugins = {
-              pycodestyle = {
-                enabled = true,
-                maxLineLength = 100,
-                -- ignore = { "E501" },
+      -- Setup LSP servers with Mason
+      mason_lspconfig.setup({
+        ensure_installed = lsp_servers,
+        handlers = {
+          -- Default handler for servers that don't require custom configuration
+          function(server_name)
+            lspconfig[server_name].setup({
+              capabilities = capabilities,
+              on_attach = on_attach,
+            })
+          end,
+          -- Specific configuration for lua_ls
+          ["lua_ls"] = function()
+            lspconfig.lua_ls.setup({
+              capabilities = capabilities,
+              on_attach = on_attach,
+              settings = {
+                Lua = {
+                  diagnostics = {
+                    globals = { "vim" }, -- Recognize 'vim' as a global variable
+                  },
+                },
               },
-              pylint = {
-                enabled = false,  -- Disable pylint if you prefer pycodestyle or other linters
+            })
+          end,
+          -- Specific configuration for ruff
+          ["ruff"] = function()
+            lspconfig.ruff.setup({
+              capabilities = capabilities,
+              on_attach = on_attach,
+              init_options = {
+                settings = {
+                  args = { "--config=pyproject.toml" },
+                },
               },
-            },
-          },
+            })
+          end,
         },
       })
     end,
   },
+  {
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          lua = { "stylua" },
+          -- Conform will run multiple formatters sequentially
+          python = { "ruff_format", "ruff_fix" },
+          -- You can customize some of the format options for the filetype (:help conform.format)
+          rust = { "rustfmt", lsp_format = "fallback" },
+          -- Conform will run the first available formatter
+          javascript = { "prettierd", "prettier", stop_after_first = true },
+        },
+        format_on_save = {
+          -- These options will be passed to conform.format()
+          timeout_ms = 500,
+          lsp_format = "fallback",
+        },
+      })
+    end,
+  }
 }
