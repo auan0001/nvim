@@ -29,6 +29,7 @@ return {
       local lspconfig = require("lspconfig")
       local mason_lspconfig = require("mason-lspconfig")
 
+
       -- Default capabilities and on_attach function (optional)
       local capabilities = require("cmp_nvim_lsp").default_capabilities() -- If using `nvim-cmp`
       local on_attach = function(client, bufnr)
@@ -72,6 +73,12 @@ return {
               },
             })
           end,
+          ["rust_analyzer"] = function()
+            lspconfig.rust_analyzer.setup({
+              capabilities = capabilities,
+              on_attach = on_attach,
+            })
+          end,
         },
       })
     end,
@@ -88,6 +95,7 @@ return {
           rust = { "rustfmt", lsp_format = "fallback" },
           -- Conform will run the first available formatter
           javascript = { "prettierd", "prettier", stop_after_first = true },
+          html = { "prettierd", "prettier", stop_after_first = true },
           json = { "jq" }
         },
         format_on_save = {

@@ -10,7 +10,7 @@ return {
       "saadparwaiz1/cmp_luasnip",
       "L3MON4D3/LuaSnip",
       {
-      "rafamadriz/friendly-snippets",
+        "rafamadriz/friendly-snippets",
         config = function()
           require("luasnip.loaders.from_vscode").lazy_load()
         end
@@ -18,7 +18,7 @@ return {
       {
         "iurimateus/luasnip-latex-snippets.nvim",
         config = function()
-          require'luasnip-latex-snippets'.setup({ use_treesitter = true })
+          require 'luasnip-latex-snippets'.setup({ use_treesitter = true })
           require("luasnip").config.setup { enable_autosnippets = true }
         end,
       },
@@ -36,6 +36,7 @@ return {
       -- Setup LSP servers.
       require('lspconfig')['clangd'].setup { capabilities = capabilities }
       require('lspconfig')['pyright'].setup { capabilities = capabilities }
+      require('lspconfig')['rust_analyzer'].setup { capabilities = capabilities }
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))

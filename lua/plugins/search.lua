@@ -7,8 +7,8 @@ return {
 
     telescope.setup {
       defaults = {
-        prompt_prefix = " ",
-        selection_caret = " ",
+        prompt_prefix = "rg ",
+        selection_caret = "➡ ",
         path_display = { "smart" },
         mappings = {
           i = {

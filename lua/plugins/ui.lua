@@ -7,9 +7,10 @@ return
       require("toggleterm").setup {
         size = 20,
         direction = 'float',
+        auto_scroll = true,
         start_in_insert = true,
         float_opts = {
-          border = 'single',
+          border = 'curved',
         }
       }
     end
