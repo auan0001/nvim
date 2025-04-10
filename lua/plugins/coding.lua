@@ -64,10 +64,12 @@ return {
           -- Specific configuration for ruff
           ["ruff"] = function()
             lspconfig.ruff.setup({
+              trace = 'messages',
               capabilities = capabilities,
               on_attach = on_attach,
               init_options = {
                 settings = {
+                  logLevel = 'debug',
                   args = { "--config=pyproject.toml" },
                 },
               },
@@ -77,6 +79,29 @@ return {
             lspconfig.rust_analyzer.setup({
               capabilities = capabilities,
               on_attach = on_attach,
+              settings = {
+                ["rust-analyzer"] = {
+                  assist = {
+                    importEnforceGranularity = true,
+                    importPrefix = "crate",
+                  },
+                  cargo = {
+                    allFeatures = true,
+                  },
+                  checkOnSave = {
+                    command = "clippy",
+                  },
+                  inlayHints = {
+                    locationLinks = false,
+                  },
+                  diagnostics = {
+                    enable = true,
+                    experimental = {
+                      enable = true,
+                    },
+                  },
+                },
+              },
             })
           end,
         },
@@ -92,15 +117,27 @@ return {
           -- Conform will run multiple formatters sequentially
           python = { "ruff_format", "ruff_fix" },
           -- You can customize some of the format options for the filetype (:help conform.format)
-          rust = { "rustfmt", lsp_format = "fallback" },
+          rust = {
+            "rustfmt",
+            lsp_format = "fallback",
+            diagnostic = {
+              refreshSupport = false,
+            }
+          },
           -- Conform will run the first available formatter
           javascript = { "prettierd", "prettier", stop_after_first = true },
           html = { "prettierd", "prettier", stop_after_first = true },
+          markdown = { "prettierd", "prettier", stop_after_first = true },
           json = { "jq" }
+        },
+        formatters = {
+          prettierd = {
+            prepend_args = { "--print-width", "80" }, -- Set max line width
+          },
         },
         format_on_save = {
           -- These options will be passed to conform.format()
-          timeout_ms = 500,
+          timeout_ms = 2000,
           lsp_format = "fallback",
         },
       })

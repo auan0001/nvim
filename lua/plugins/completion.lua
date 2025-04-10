@@ -131,6 +131,26 @@ return {
     end
   },
   -- Snippets plugins
-  { "L3MON4D3/LuaSnip" },
+
+
+
   { "rafamadriz/friendly-snippets" },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   {
+  --     "zbirenbaum/copilot-cmp",
+  --     event = "InsertEnter",
+  --     config = function() require("copilot_cmp").setup() end,
+  --     dependencies = {
+  --       "zbirenbaum/copilot.lua",
+  --       cmd = "Copilot",
+  --       config = function()
+  --         require("copilot").setup({
+  --           suggestion = { enabled = false },
+  --           panel = { enabled = false },
+  --         })
+  --       end,
+  --     },
+  --   },
+  -- },
 }
